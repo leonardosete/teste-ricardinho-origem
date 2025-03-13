@@ -1,14 +1,13 @@
 name: Trigger Remote Workflow
 
 on: [push, workflow_dispatch]
-
 jobs:
   trigger-remote:
     runs-on: ubuntu-latest
     steps:
-      - name: Trigger workflow via GitHub API
-        run: |
-          curl -X POST https://api.github.com/repos/leonardosete/teste-ricardinho-destino/dispatches \
-            -H "Accept: application/vnd.github.v3+json" \
-            -H "Authorization: token ${{ secrets.GH_PAT }}" \
-            -d '{"event_type": "trigger-workflow"}'
+      - name: Trigger External Workflow
+        uses: passeidireto/trigger-external-workflow-action@v1.0.0
+        with:
+          repository: leonardosete/teste-ricardinho-destino
+          event: trigger-workflow
+          github_pat: ${{ secrets.GH_PAT }}
